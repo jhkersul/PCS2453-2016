@@ -1,0 +1,3 @@
+
+class PhysicalPrinter
+end

@@ -15,11 +15,11 @@
 ### Saídas Esperadas
 * Imprimir um log de simulação na forma de uma lista, classificando todos os instantes previstos e executados, para todos os eventos que ocorrem na simulação.
 * Impressão deve seguir a seguinte formatação:
-  * <instante> é o valor corrente do relógio do Simulador
-  * <tipo de evento> indica qual foi a ocorrência observada nesse instante da simulação
-  * <identificação do programa> indica qual dos programas simulados provocou o evento
-  * <ação executada> indica qual rotina foi executada como reação do sistema à ocorrencia do evento
-  * <resultado> indica os efeitos dessa reação sobre a situação corrente do programa simulado
+  * <b>instante</b> é o valor corrente do relógio do Simulador
+  * <b>tipo de evento</b> indica qual foi a ocorrência observada nesse instante da simulação
+  * <b>identificação do programa</b> indica qual dos programas simulados provocou o evento
+  * <b>ação executada</b> indica qual rotina foi executada como reação do sistema à ocorrencia do evento
+  * <b>resultado</b> indica os efeitos dessa reação sobre a situação corrente do programa simulado
 
 ### Configuração à Simulador
 * Memória principal (segmentada)
@@ -32,7 +32,7 @@
 <img src="images/estados_jobs.png" width="600">
 
 ### Eventos e seu Tratamento
-* Events simulam interrupções na máquina
+* Eventos simulam interrupções na máquina
 * Para cada tipo de interrupção deve haver uma rotina de tratamento
 * O instante da ocorrência das interrupções deve ser programada no simulador
 
