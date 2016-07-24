@@ -1,10 +1,11 @@
+require '../part1/processor'
 
 =begin
 Classe Simulator
 É o simulador em si, esta classe gerencia as execuções do simulador
 =end
 class Simulator
-  attr_accessor :simulation_log, :initial_instant, :final_instant, :programs, :current_instant
+  attr_accessor :simulation_log, :initial_instant, :final_instant, :programs, :current_instant, :jobs_table
 
   # Carregando dados na inicialização do simulador
   def initialize(initial_instant, final_instant, programs)
@@ -16,8 +17,10 @@ class Simulator
 
   # Rodar simulador
   def run
+    processor = Processor.new(self)
+
     while @current_instant != @final_instant
-      @current_instant += 1
+      processor.clock
 
       add_event_to_log(current_instant, "NADA", "NADA", "NADA", "NADA")
     end
