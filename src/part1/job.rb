@@ -9,7 +9,7 @@ class Job
   attr_accessor :name, :arrival_time, :total_time, :mem_size, :io_operations, :priority, :device, :t_needed
 
   # Inicializando valores iniciais do programa
-  def initialize(name, arrival_time, total_time, mem_size, num_segments, io_operations, priority, device)
+  def initialize(name, arrival_time, total_time, mem_size, io_operations, priority, device)
     @name = name
     @arrival_time = arrival_time
     @total_time = total_time
@@ -25,6 +25,14 @@ class Job
     if @t_needed > 0
       @t_needed -= 1
     end
+  end
+
+  def done
+    @t_needed <= 0
+  end
+
+  def has_io_operations
+    @io_operations > 0
   end
 
 end

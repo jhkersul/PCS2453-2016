@@ -9,10 +9,11 @@ class Processor
   # priority - Prioridade do job em execução
   # next_t - Próximo instante de tempo para o job seguinte
   # interrupt_flag - Flag de interrupção para o job atual
-  attr_accessor :job_execution, :priority, :next_t, :current_t, :interrupt_flag, :queue, :simulator
+  attr_accessor :job_execution, :priority, :next_t, :current_t, :interrupt_flag, :queue, :simulator, :cpu_time
 
-  def initialize(simulator)
+  def initialize(simulator, cpu_time)
     @simulator = simulator
+    @cpu_time = cpu_time
     @queue = Queue.new
   end
 
@@ -88,6 +89,14 @@ class Processor
     end
   end
 
+  def release(job, time)
+
+  end
+
+  def busy
+    !@job_execution.nil?
+  end
+
   def set_job_execution(job)
     # Setando novo job para ser executado
     @job_execution = job
@@ -103,6 +112,10 @@ class Processor
 
     # Roda o round_robin em cada ciclo de clock
     round_robin
+  end
+
+  def has_job_queue
+    !@queue.empty?
   end
 
 

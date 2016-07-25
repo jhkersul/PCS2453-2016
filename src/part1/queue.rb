@@ -54,4 +54,14 @@ class Queue
     @jobs.empty?
   end
 
+  def has_job?(job)
+    @jobs.each do |j|
+      if j == job
+        return true
+      end
+    end
+
+    false
+  end
+
 end

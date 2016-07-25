@@ -16,8 +16,8 @@ class Event
   @@request_cm = 2
   @@request_cpu = 3
   @@release_cpu = 4
-  @@request_disk = 5
-  @@release_disk = 6
+  @@request_io = 5
+  @@release_io = 6
   @@release_cm = 7
   @@completion = 8
 
@@ -33,11 +33,11 @@ class Event
   def release_cpu
     @@release_cpu
   end
-  def request_disk
-    @@request_disk
+  def request_io
+    @@request_io
   end
-  def release_disk
-    @@release_disk
+  def release_io
+    @@release_io
   end
   def release_cm
     @@release_cm

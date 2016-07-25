@@ -58,30 +58,6 @@
 ### Alocação do Processador
 <img src="images/alocacao_processador.png" width="400">
 
-### Sequência de Procedimentos do Job
-1) Job chega no sistema
-
-2) Espaço da memória principal é requisitada para o job. Se há espaço disponível é alocado para o job. Se não há espaço disponível o job entra em uma fila.
-
-3) O processador central é requerido. Se estiver livre o job é executado até achar uma operação de IO ou a execução estive completa. Se o processador estiver ocupado, o job é colocado na fila.
-
-4) Quando um job requer um IO, ele sai do processador e vai para o dispositivo IO. Se o dispositivo estiver livre, começa a realizar o procedimento, se não vai para a fila.
-
-5) Quando o job termina o IO o disco é liberado e o processador é requisitado novamente 
-
-6) Quando o job termina sua execução, o processador é liberado e o espaço que ele ocupava na memória também é liberado
-
-7) O job sai do sistema
-
-### Estrutura do Simulador
-1) O Scheduler pega o evento do topo da lista de eventos. Esta entrada especifica um event time T, um event identifier E e um ponteiro para um job J.
-
-2) O Scheduler avança o clock para o event time T especificado no primeiro passo. Pois este é o tempo do primeiro evento que irá ocorrer no sistema.
-
-3) O Scheduler transfere o controle para a rotina do evento especificado
-
-4) A rotina realiza todos os procedimentos necessários para o job, determina o próximo evento, event time e o job e adiciona à list de eventos. Depois retorna o controle para o Scheduler.
-
 ## Segunda Parte
 
 ### Gerenciador de Memória: Memória Virtual Segmentada, Sem Paginação
@@ -146,3 +122,40 @@
 * <b>Tabela de partições ocupadas no disco</b> (única), correspondente ao conjunto de arquivos que formam o sistema de arquivos implementado. Cada linha desta tabela indica o nome, o possuidor, o tamanho e as características do arquivo a que se refere.
 * <b>Eventos independentes</b>: chegada dos jobs
   * Identificação, instante de chegada, recursos utilizados: tempo de CPU, número de operações de entrada/saída, quantidade de memória ocupada pelos diversos segmentos.
+
+
+## Complementação
+
+### Sequência de Procedimentos do Job
+1) Job chega no sistema
+
+2) Espaço da memória principal é requisitada para o job. Se há espaço disponível é alocado para o job. Se não há espaço disponível o job entra em uma fila.
+
+3) O processador central é requerido. Se estiver livre o job é executado até achar uma operação de IO ou a execução estive completa. Se o processador estiver ocupado, o job é colocado na fila.
+
+4) Quando um job requer um IO, ele sai do processador e vai para o dispositivo IO. Se o dispositivo estiver livre, começa a realizar o procedimento, se não vai para a fila.
+
+5) Quando o job termina o IO o disco é liberado e o processador é requisitado novamente 
+
+6) Quando o job termina sua execução, o processador é liberado e o espaço que ele ocupava na memória também é liberado
+
+7) O job sai do sistema
+
+### Estrutura do Simulador
+1) O Scheduler pega o evento do topo da lista de eventos. Esta entrada especifica um event time T, um event identifier E e um ponteiro para um job J.
+
+2) O Scheduler avança o clock para o event time T especificado no primeiro passo. Pois este é o tempo do primeiro evento que irá ocorrer no sistema.
+
+3) O Scheduler transfere o controle para a rotina do evento especificado
+
+4) A rotina realiza todos os procedimentos necessários para o job, determina o próximo evento, event time e o job e adiciona à list de eventos. Depois retorna o controle para o Scheduler.
+
+### Segmentação Simples
+* Divide-se o programa em segmentos
+* Aloca-se uma partição para cada segmento
+* Monta-se uma tabela de mapeamento de segmentos, indicando a posição de cada um na memória física
+* Trata-se cada segmento como se fosse uma partição relocável, usando como base o endereço de alocação
+* Determina-se dinamicamente a base para utilizar para a relocação, para cada referência à memória
+
+### Mapeamento de Endereços em Memória Segmentada
+* Programa referencia um endereço lógico bidimensional (Segmento, Endereço Interno)
