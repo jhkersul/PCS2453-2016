@@ -1,5 +1,5 @@
 
-class PhysicalPrinter
+class Device
   attr_accessor :queue
 
   def initialize

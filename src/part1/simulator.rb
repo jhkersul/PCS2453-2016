@@ -1,17 +1,19 @@
-require '../part1/processor'
+require './processor'
+require './device'
+require './job'
 
 =begin
 Classe Simulator
 É o simulador em si, esta classe gerencia as execuções do simulador
 =end
 class Simulator
-  attr_accessor :simulation_log, :initial_instant, :final_instant, :programs, :current_instant, :jobs_table
+  attr_accessor :simulation_log, :initial_instant, :final_instant, :current_instant, :events
 
   # Carregando dados na inicialização do simulador
-  def initialize(initial_instant, final_instant, programs)
+  def initialize(initial_instant, final_instant, events)
     @initial_instant = initial_instant
     @final_instant = final_instant
-    @programs = programs
+    @events = events
     @current_instant = initial_instant
   end
 
@@ -19,14 +21,33 @@ class Simulator
   def run
     processor = Processor.new(self)
 
+    # Enquanto o instante atual não é igual ao instante final, ele fica mandando jobs para o processador
     while @current_instant != @final_instant
+      job = get_event_arrival_time(current_instant)
+
+      unless event.nil?
+        job = Job.new(event.priority, @current_instant, event)
+        processor.submit_job(job)
+      end
+
       processor.clock
 
-      add_event_to_log(current_instant, "NADA", "NADA", "NADA", "NADA")
     end
 
     print_log
   end
+
+  # Verifica se existe algum evento com um determinado arrival_time
+  def get_event_arrival_time(arrival_time)
+    events.each do |event|
+      if event.arrival_time == arrival_time
+        return event
+      end
+    end
+
+    nil
+  end
+
 
   # Imprime o log de saída da simulação
   # Formato da Saída:
