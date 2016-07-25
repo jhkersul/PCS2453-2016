@@ -4,50 +4,48 @@ Responsável por definir o comportamento de um processo
 =end
 class Event
 
-  attr_accessor :id, :job, :execution_time
+  attr_accessor :id, :job, :event_time
 
-  def initialize(id, job, execution_time)
+  def initialize(id, job, event_time)
     @id = id
     @job = job
-    @execution_time = execution_time
+    @event_time = event_time
   end
 
-  @@id_iniciar = 1
-  @@id_requerer_memoria= 2
-  @@id_requerer_cpu = 3
-  @@id_liberar_cpu = 4
-  @@id_requerer_io = 5
-  @@id_liberar_io = 6
-  @@id_liberar_cpu_memoria = 7
-  @@id_mudar_programa_cpu = 8
-  @@id_mudar_segmento = 9
+  @@arrival = 1
+  @@request_cm = 2
+  @@request_cpu = 3
+  @@release_cpu = 4
+  @@request_disk = 5
+  @@release_disk = 6
+  @@release_cm = 7
+  @@completion = 8
 
-  def id_iniciar
-    @@id_iniciar
+  def arrival
+    @@arrival
   end
-  def id_requerer_memoria
-    @@id_requerer_memoria
+  def request_cm
+    @@request_cm
   end
-  def id_requerer_cpu
-    @@id_requerer_cpu
+  def request_cpu
+    @@request_cpu
   end
-  def id_requerer_io
-    @@id_requerer_io
+  def release_cpu
+    @@release_cpu
   end
-  def id_liberar_io
-    @@id_liberar_io
+  def request_disk
+    @@request_disk
   end
-  def id_liberar_cpu
-    @@id_liberar_cpu
+  def release_disk
+    @@release_disk
   end
-  def id_liberar_cpu_memoria
-    @@id_liberar_cpu_memoria
+  def release_cm
+    @@release_cm
   end
-  def id_mudar_programa_cpu
-    @@id_mudar_programa_cpu
+  def completion
+    @@completion
   end
-  def id_mudar_segmento
-    @@id_mudar_segmento
-  end
+
+
 
 end

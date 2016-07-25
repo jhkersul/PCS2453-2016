@@ -1,6 +1,7 @@
 require './simulator'
 require './device'
 require './event'
+require './event_list'
 
 =begin
 Classe Main
@@ -44,7 +45,6 @@ class Main
 
     # Fechando arquivo
     file.close
-
 
     # Criando simulador
     simulator = Simulator.new(0, 100, jobs_table)

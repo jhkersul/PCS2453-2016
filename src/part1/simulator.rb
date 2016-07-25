@@ -1,34 +1,53 @@
 require './processor'
 require './device'
 require './job'
+require './event'
+require './event_list'
+require './main_memory'
 
 =begin
 Classe Simulator
 É o simulador em si, esta classe gerencia as execuções do simulador
 =end
 class Simulator
-  attr_accessor :simulation_log, :initial_instant, :final_instant, :current_instant, :events
+  attr_accessor :simulation_log, :initial_instant, :final_instant, :current_instant, :event_list, :jobs_table
 
   # Carregando dados na inicialização do simulador
-  def initialize(initial_instant, final_instant, events)
+  def initialize(initial_instant, final_instant, jobs_table)
     @initial_instant = initial_instant
     @final_instant = final_instant
-    @events = events
-    @current_instant = initial_instant
+    @jobs_table = jobs_table
+    @current_instant = @initial_instant
   end
 
   # Rodar simulador
   def run
+    # Instanciando objetos
     processor = Processor.new(self)
+    memory = MainMemory.new(1000, 10)
 
-    # Enquanto o instante atual não é igual ao instante final, ele fica mandando jobs para o processador
-    while @current_instant != @final_instant
-      job = get_event_arrival_time(current_instant)
 
-      unless event.nil?
-        job = Job.new(event.priority, @current_instant, event)
-        processor.submit_job(job)
+    # Formando lista inicial de eventos
+    @event_list = EventList.new
+    jobs_table.each do |job|
+      event = Event.new(Event.id_arrival, job, job.arrival_time)
+      @event_list.add(event)
+    end
+
+
+    while !@event_list.empty? && @current_instant < @final_instant
+      current_event = @event_list.next
+      current_job = current_event.job
+
+      case current_event.id
+        when Event.arrival
+          @event_list.add(Event.new(Event.request_cm, current_job, current_job.total_time))
+          add_event_to_log(@current_instant, 'CHEGADA', current_job.name, 'JOB REQUISITA MEMÓRIA', 'EVENTO NOVO ADICIONADO NA LISTA')
+        when Event.request_cm
+
+
       end
+
 
       processor.clock
 

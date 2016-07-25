@@ -60,17 +60,26 @@
 
 ### Sequência de Procedimentos do Job
 1) Job chega no sistema
+
 2) Espaço da memória principal é requisitada para o job. Se há espaço disponível é alocado para o job. Se não há espaço disponível o job entra em uma fila.
+
 3) O processador central é requerido. Se estiver livre o job é executado até achar uma operação de IO ou a execução estive completa. Se o processador estiver ocupado, o job é colocado na fila.
+
 4) Quando um job requer um IO, ele sai do processador e vai para o dispositivo IO. Se o dispositivo estiver livre, começa a realizar o procedimento, se não vai para a fila.
+
 5) Quando o job termina o IO o disco é liberado e o processador é requisitado novamente 
+
 6) Quando o job termina sua execução, o processador é liberado e o espaço que ele ocupava na memória também é liberado
+
 7) O job sai do sistema
 
 ### Estrutura do Simulador
 1) O Scheduler pega o evento do topo da lista de eventos. Esta entrada especifica um event time T, um event identifier E e um ponteiro para um job J.
+
 2) O Scheduler avança o clock para o event time T especificado no primeiro passo. Pois este é o tempo do primeiro evento que irá ocorrer no sistema.
+
 3) O Scheduler transfere o controle para a rotina do evento especificado
+
 4) A rotina realiza todos os procedimentos necessários para o job, determina o próximo evento, event time e o job e adiciona à list de eventos. Depois retorna o controle para o Scheduler.
 
 ## Segunda Parte

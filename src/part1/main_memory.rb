@@ -1,17 +1,24 @@
 
 class MainMemory
 
-  attr_accessor :mem_size, :io_time, :queue, :content
+  attr_accessor :mem_size, :relocation_time, :queue, :available_size, :blocks
 
-  def initialize(mem_size, io_time)
+  def initialize(mem_size, relocation_time)
     @queue = Queue.new
     @mem_size = mem_size
-    @io_time = io_time
-    @content = Array.new(@mem_size, 0)
+    @available_size = mem_size
+    @relocation_time = relocation_time
+    @blocks = []
   end
 
-  def access_memory
+  def request(job, time)
 
+    # Verificar se o segmento já está alocado na memória
+    @blocks.each do |block|
+      if block.name == job.name
+        if
+      end
+    end
   end
 
 end
