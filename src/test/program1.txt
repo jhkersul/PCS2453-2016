@@ -1,0 +1,4 @@
+# Estrutura de um programa
+# NOME TEMPO_CHEGADA TEMPO_TOTAL TAM_MEM NUM_OP_IO PRIODIDADE DISPOSITIVO
+# Tipos de dispositivos: 1 = disk, 2 = printer1, 3 = printer2, 4 = reader1, 5 = reader2
+job1 1 10 10 10 0 1

@@ -37,7 +37,7 @@ class Main
       line_array = line.split(" ")
       # Jogando os valores que não são comentários para o job
       if line_array[0] != '#' && !line_array.nil?
-        job = Job.new(line_array[0], line_array[1].to_i, line_array[2].to_i, line_array[3].to_i, line_array[4].to_i, line_array[5].to_i, line_array[6])
+        job = Job.new(line_array[0], line_array[1].to_i, line_array[2].to_i, line_array[3].to_i, line_array[4].to_i, line_array[5].to_i, line_array[6].to_i)
 
         jobs_table << job
       end

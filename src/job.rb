@@ -21,9 +21,9 @@ class Job
   end
 
   # Diminui o tempo necessário para processar este job
-  def decrease_time
+  def decrease_time(time)
     if @t_needed > 0
-      @t_needed -= 1
+      @t_needed -= time
     end
   end
 
