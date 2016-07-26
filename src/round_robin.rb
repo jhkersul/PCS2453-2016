@@ -1,5 +1,11 @@
 
+## Esta classe descreve o comportamento do Round Robin do processador.
 class RoundRobin
+
+  ## Variáveis
+  # jobs - Lista de jobs que estão atualmente no round robin
+  # current_size - O tamanho atual da lista de round robin
+  # max_size - O tamanho máximo permitido por este round robin
   attr_accessor :jobs, :current_size, :max_size
 
   def initialize(max_size)
@@ -8,6 +14,7 @@ class RoundRobin
     @jobs = []
   end
 
+  # Método que define
   def add(job)
     if @current_size < @max_size
       @jobs << job

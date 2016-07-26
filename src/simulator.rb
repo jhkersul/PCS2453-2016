@@ -10,6 +10,13 @@ Classe Simulator
 É o simulador em si, esta classe gerencia as execuções do simulador
 =end
 class Simulator
+  ## Variáveis
+  # simulation_log - Grava o log da simulação, tudo que está acontecendo nela
+  # initial_instant - Instante inicial da simulação
+  # final_instant - Instante final da simulação
+  # current_instant - Instante atual da simulação
+  # event_list - Lista de eventos
+  # jobs_table - Tabela de Jobs
   attr_accessor :simulation_log, :initial_instant, :final_instant, :current_instant, :event_list, :jobs_table
 
   # IDs dos Dispositivos
@@ -30,7 +37,7 @@ class Simulator
   # Rodar simulador
   def run
     # Instanciando objetos
-    processor = Processor.new(self, 10)
+    processor = Processor.new(10)
     memory = MainMemory.new(1000, 10)
     disk = Device.new(1)
     printer1 = Device.new(3)
@@ -126,39 +133,51 @@ class Simulator
         when Event::REQUEST_IO
           case current_job.device
             when ID_DISK
-              disk.request(current_job, @current_instant)
-              @event_list.add(Event.new(Event::RELEASE_IO, current_job, @current_instant + disk.total_time))
-              add_event_to_log(@current_instant, 'REQUERER IO', current_job.name, 'JOB É ENVIADO AO DISCO', 'DISCO PROCESSARÁ AS REQUISIÇÕES DE IO')
+              used_device = disk
             when ID_PRINTER1
+              used_device = printer1
             when ID_PRINTER2
+              used_device = printer2
             when ID_READER1
+              used_device = reader1
             when ID_READER2
+              used_device = reader2
             else
               puts 'DISPOSITIVO INVALIDO'
+              return
           end
 
-        when Event::RELEASE_IO
+          used_device.request(current_job, @current_instant)
+          @event_list.add(Event.new(Event::RELEASE_IO, current_job, @current_instant + used_device.total_time))
+          add_event_to_log(@current_instant, 'REQUERER IO', current_job.name, 'JOB É ENVIADO AO DISPOSITIVO', 'DISPOSITIVO PROCESSARÁ AS REQUISIÇÕES DE IO')
 
+        when Event::RELEASE_IO
           case current_job.device
             when ID_DISK
               new_job = disk.release
-              # Vamos ver se o dispositivo possui outros jobs na fila
-              unless new_job.nil?
-                @event_list.add(Event.new(Event::REQUEST_IO, new_job, @current_instant))
-                add_event_to_log(@current_instant, 'LIBERAR IO', new_job.name, 'EXISTE OUTROS JOBS NA FILA DO DISCO', 'ENVIA REQUISIÇÃO AO DISCO PARA PROCESSAR PROXIMO IO')
-              end
-
-              # Verificando se o job atual já terminou seus processos de IO, voltamos à CPU
-              if current_job.io_operations == 0
-                @event_list.add(Event.new(Event::REQUEST_CPU, current_job, @current_instant))
-                add_event_to_log(@current_instant, 'LIBERAR IO', current_job.name, 'OPERAÇÃO IO ACABOU', 'ENVIA REQUISIÇÃO PARA CPU, AGORA SEM NENHUM IO PARA PROCESSAR')
-              end
             when ID_PRINTER1
+              new_job = printer1.release
             when ID_PRINTER2
+              new_job = printer2.release
             when ID_READER1
+              new_job = reader1.release
             when ID_READER2
+              new_job = reader2.release
             else
               puts 'DISPOSITIVO INVALIDO'
+              return
+          end
+
+          # Vamos ver se o dispositivo possui outros jobs na fila
+          unless new_job.nil?
+            @event_list.add(Event.new(Event::REQUEST_IO, new_job, @current_instant))
+            add_event_to_log(@current_instant, 'LIBERAR IO', new_job.name, 'EXISTE OUTROS JOBS NA FILA DO DISPOSITIVO', 'ENVIA REQUISIÇÃO AO DISPOSITIVO PARA PROCESSAR PROXIMO IO')
+          end
+
+          # Verificando se o job atual já terminou seus processos de IO, voltamos à CPU
+          if current_job.io_operations == 0
+            @event_list.add(Event.new(Event::REQUEST_CPU, current_job, @current_instant))
+            add_event_to_log(@current_instant, 'LIBERAR IO', current_job.name, 'OPERAÇÃO IO ACABOU', 'ENVIA REQUISIÇÃO PARA CPU, AGORA SEM NENHUM IO PARA PROCESSAR')
           end
 
         when Event::RELEASE_CM

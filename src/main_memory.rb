@@ -1,7 +1,17 @@
 require './block'
 
+=begin
+Classe MainMemory
+Descreve o comportamento da memória principal do sistema
+=end
 class MainMemory
 
+  ## Variáveis
+  # mem_size - Tamanho da memória
+  # relocation_time - Tempo de relocação da memória
+  # queue - Fila da memória
+  # available_size - Espaço disponível na memória
+  # blocks - Blocos na memória
   attr_accessor :mem_size, :relocation_time, :queue, :available_size, :blocks
 
   def initialize(mem_size, relocation_time)
@@ -42,6 +52,7 @@ class MainMemory
     true
   end
 
+  # Função que libera job da memória
   def release(job, time)
 
     # Verificando se este job ocupa algum bloco
@@ -54,6 +65,7 @@ class MainMemory
 
   end
 
+  # Função que verifica se existe algum job na fila da memória
   def has_job_queue?
     !@queue.empty?
   end

@@ -1,4 +1,8 @@
 
+=begin
+Classe Queue
+Descreve o comportamento da fila de jobs. Esta fila é aplicada no processador, na memória e nos dispositivos.
+=end
 class Queue
 
   ## Variáveis do Header da lista
@@ -9,6 +13,7 @@ class Queue
   # sum_tq - tamanho * tempo acumulado
   # t_last - Instante da ultima entrada/saída
   # n - Contador de entrada
+  # jobs - array de jobs da fila
   attr_accessor :w_max, :sum_tw, :q_max, :q, :sum_tq, :t_last, :n, :jobs
 
   def initialize
@@ -23,6 +28,7 @@ class Queue
   end
 
 
+  # Função para adicionar job à fila
   def add_job(job, instant)
     # Caso a fila já esteja no seu tamanho máximo, ignorar chegada de um novo job (overflow de fila)
     if @q >= @q_max
@@ -36,6 +42,7 @@ class Queue
     @jobs.push(job)
   end
 
+  # Função para pegar job que chegou primeiro (First In First Out)
   def get_job(instant)
     # Caso esteja vazio, retorne nulo, não existe nenhum job na fila
     if @jobs.empty?
@@ -50,10 +57,12 @@ class Queue
     @jobs.shift
   end
 
+  # Verifica se a fila está vazia ou não
   def empty?
     @jobs.empty?
   end
 
+  # A fila possui este determinado job?
   def has_job?(job)
     @jobs.each do |j|
       if j == job

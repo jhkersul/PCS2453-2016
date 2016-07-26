@@ -3,7 +3,6 @@
 
 ## Primeira Parte
 
-
 ### Entradas do Simulador
 * Instante inicial de acionamento do relógio de tempo real
 * Instante final da simulação

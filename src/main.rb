@@ -51,7 +51,7 @@ class Main
     # Rodando simulador
     simulator.run
   else
-    puts "Arquivo não existe, finalizando programa."
+    puts 'Arquivo não existe, finalizando programa.'
   end
 
 end

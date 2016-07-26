@@ -3,22 +3,24 @@ require './simulator'
 require './job'
 require './round_robin'
 
+## Esta classe descreve o comportamento do Processador
 class Processor
 
-  ## Variáveis do Header da lista
+  ## Variáveis
   # job_execution - Job que está em execução
-  # priority - Prioridade do job em execução
-  # next_t - Próximo instante de tempo para o job seguinte
-  # interrupt_flag - Flag de interrupção para o job atual
-  attr_accessor :job_execution, :priority, :next_t, :current_t, :interrupt_flag, :queue, :simulator, :cpu_time, :round_robin
+  # priority - Prioridade do job em execuçã
+  # queue - Fila do processador
+  # cpu_time - Tamanho de um time slice da CPU
+  # round_robin - Round Robin da CPU (referencia à classe Round Robin)
+  attr_accessor :job_execution, :priority, :queue, :cpu_time, :round_robin
 
-  def initialize(simulator, cpu_time)
-    @simulator = simulator
+  def initialize(cpu_time)
     @cpu_time = cpu_time
     @queue = Queue.new
     @round_robin = RoundRobin.new(5)
   end
 
+  # Envio de requisição para a CPU
   def request(job, time)
 
     # Se for possível adicionar no Round Robin, colocaremos, se não for possível colocamos na fila do processador
